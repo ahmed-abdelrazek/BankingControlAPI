@@ -48,8 +48,8 @@ public class Program
         builder.Services.AddFluentValidationAutoValidation();
         builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
-        Log.Logger.Information("Setting Db Context");
         builder.Services.AddDbContexts();
+        builder.Services.AddAuthenticationServices(builder.Configuration);
 
         Log.Logger.Information("Setting Controllers");
         builder.Services.AddControllers();
