@@ -32,8 +32,8 @@ namespace BankingControlAPI.Data.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    PersonalId = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    ProfilePhotoPath = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    NationalID = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    AvatarPath = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
                     Sex = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -168,7 +168,7 @@ namespace BankingControlAPI.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "gen_random_uuid()"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -224,9 +224,9 @@ namespace BankingControlAPI.Data.Migrations
                 column: "LastName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clients_PersonalId",
+                name: "IX_Clients_NationalID",
                 table: "Clients",
-                column: "PersonalId");
+                column: "NationalID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_PhoneNumber",

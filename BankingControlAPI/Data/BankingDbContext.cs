@@ -21,7 +21,7 @@ namespace BankingControlAPI.Data
             {
                 entity.ToTable("Clients");
 
-                entity.Property(x => x.ProfilePhotoPath).HasMaxLength(250);
+                entity.Property(x => x.AvatarPath).HasMaxLength(250);
 
                 entity.HasIndex(x => x.PhoneNumber);
                 entity.Property(x => x.PhoneNumber).HasMaxLength(25);
@@ -32,8 +32,8 @@ namespace BankingControlAPI.Data
                 entity.HasIndex(x => x.LastName);
                 entity.Property(x => x.LastName).HasMaxLength(60);
 
-                entity.HasIndex(x => x.PersonalId);
-                entity.Property(x => x.PersonalId).HasMaxLength(11);
+                entity.HasIndex(x => x.NationalID);
+                entity.Property(x => x.NationalID).HasMaxLength(11);
 
                 entity.OwnsOne(o => o.Address, mo =>
                 {
