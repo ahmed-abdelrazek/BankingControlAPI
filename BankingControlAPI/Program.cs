@@ -1,3 +1,4 @@
+using BankingControlAPI.Domain.Enums;
 using BankingControlAPI.Extensions;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -51,6 +52,9 @@ public class Program
         builder.Services.AddDbContexts();
         builder.Services.AddAuthenticationServices(builder.Configuration);
 
+        Log.Logger.Information("Setting Maintenace");
+        builder.Services.AddMaintenance(MaintenanceStatus.None);
+
         Log.Logger.Information("Setting Controllers");
         builder.Services.AddControllers();
 
@@ -69,6 +73,8 @@ public class Program
         }
 
         app.UseCors(AllowAllHeadersPolicy);
+
+        app.UseMaintenance();
 
         app.UseErrorHandlers();
 
