@@ -166,7 +166,7 @@ namespace BankingControlAPI.Data.Migrations
                 name: "ClientsAccounts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "gen_random_uuid()"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "newsequentialid()"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ClientId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },

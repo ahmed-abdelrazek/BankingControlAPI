@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingControlAPI.Data.Migrations
 {
     [DbContext(typeof(BankingDbContext))]
-    [Migration("20240822152725_Initial")]
+    [Migration("20240822153617_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -126,7 +126,7 @@ namespace BankingControlAPI.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("gen_random_uuid()");
+                        .HasDefaultValueSql("newsequentialid()");
 
                     b.Property<string>("ClientId")
                         .HasColumnType("nvarchar(450)");

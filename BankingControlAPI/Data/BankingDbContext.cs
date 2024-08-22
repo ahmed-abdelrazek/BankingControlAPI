@@ -48,7 +48,7 @@ namespace BankingControlAPI.Data
             builder.Entity<ClientAccount>(entity =>
             {
                 entity.HasKey(x => x.Id);
-                entity.Property(x => x.Id).HasDefaultValueSql("gen_random_uuid()").ValueGeneratedOnAdd();
+                entity.Property(x => x.Id).HasDefaultValueSql("newsequentialid()").ValueGeneratedOnAdd();
 
                 entity.HasIndex(x => x.Name);
                 entity.Property(x => x.Name).HasMaxLength(100);

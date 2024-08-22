@@ -123,7 +123,7 @@ namespace BankingControlAPI.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("gen_random_uuid()");
+                        .HasDefaultValueSql("newsequentialid()");
 
                     b.Property<string>("ClientId")
                         .HasColumnType("nvarchar(450)");
