@@ -8,6 +8,9 @@ namespace BankingControlAPI.Extensions
 {
     public static class AuthenticationServicesExtensions
     {
+        /// <summary>
+        /// Add Microsoft Identity Server and set its option up
+        /// </summary>
         public static IServiceCollection AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
         {
             Log.Logger.Information("Setting Identity Server");
