@@ -89,17 +89,17 @@ namespace BankingControlAPI.HostedServices
 
                     var user = new Client
                     {
-                        FirstName = "System",
-                        LastName = "Admin",
-                        NationalID = "15926487412",
-                        UserName = "admin",
-                        Email = "admin@example.com",
+                        FirstName = "Ahmed",
+                        LastName = "Abdelrazek",
+                        NationalID = "15946435478",
+                        UserName = "user@example.com",
+                        Email = "user@example.com",
                         EmailConfirmed = true,
-                        PhoneNumber = "+201147894415",
+                        PhoneNumber = "+201168297777",
                         Accounts = [new ClientAccount { Name = "Saving Account" }, new ClientAccount { Name = "Checking Account" }]
                     };
 
-                    rslt = await userManager.CreateAsync(admin, "user123");
+                    rslt = await userManager.CreateAsync(user, "user123");
 
                     if (!rslt.Succeeded)
                     {
