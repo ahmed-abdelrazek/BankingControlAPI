@@ -60,7 +60,10 @@ public class Program
         builder.Services.AddMaintenance(MaintenanceStatus.None);
 
         Log.Logger.Information("Setting Controllers");
-        builder.Services.AddControllers();
+        builder.Services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        });
         builder.Services.AddHttpContextAccessor();
 
         Log.Logger.Information("Setting Swagger");
