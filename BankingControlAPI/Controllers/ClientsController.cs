@@ -1,5 +1,6 @@
 ﻿using BankingControlAPI.Domain.Enums;
 using BankingControlAPI.Domain.Responses;
+using BankingControlAPI.Features.Clients.Commands.Register;
 using BankingControlAPI.Features.Clients.DTOs;
 using BankingControlAPI.Features.Clients.Queries.List;
 using BankingControlAPI.Features.Clients.Queries.One;
@@ -41,6 +42,16 @@ namespace BankingControlAPI.Controllers
         public async Task<ActionResult<ClientDetailsDto>> GetById(Guid id)
         {
             var data = await Mediator.Send(new GetClientDetailsByIdQuery(id.ToString()));
+            return Ok(data);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("Register")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<string>> Register([FromForm] RegisterClientCommand command)
+        {
+            var data = await Mediator.Send(command);
             return Ok(data);
         }
     }
