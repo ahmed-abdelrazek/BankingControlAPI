@@ -1,6 +1,7 @@
 using BankingControlAPI.Domain.Enums;
 using BankingControlAPI.Extensions;
 using BankingControlAPI.Interfaces;
+using BankingControlAPI.OperationFilters;
 using BankingControlAPI.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -91,6 +92,8 @@ public class Program
                     []
                 }
             });
+
+            opt.SchemaFilter<EnumSchemaFilter>();
         });
 
         builder.Services.AddHostedServices();
