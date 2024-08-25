@@ -1,5 +1,7 @@
 using BankingControlAPI.Domain.Enums;
 using BankingControlAPI.Extensions;
+using BankingControlAPI.Interfaces;
+using BankingControlAPI.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Serilog;
@@ -64,6 +66,16 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddHostedServices();
+        builder.Services.AddSingleton<IBackgroundTaskQueue>(_ =>
+        {
+            if (!int.TryParse(builder.Configuration["QueueCapacity"], out var queueCapacity))
+            {
+                queueCapacity = 100;
+            }
+
+            return new DefaultBackgroundTaskQueue(queueCapacity);
+        });
+
 
         var app = builder.Build();
 

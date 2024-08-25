@@ -13,6 +13,7 @@ namespace BankingControlAPI.Extensions
             Log.Logger.Information("Setting Hosted Services");
 
             services.AddHostedService<DbMigrationHostedService>();
+            services.AddHostedService<QueuedHostedService>();
 
             return services;
         }
