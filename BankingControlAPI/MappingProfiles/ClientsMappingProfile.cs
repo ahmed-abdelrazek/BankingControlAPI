@@ -17,6 +17,15 @@ namespace BankingControlAPI.MappingProfiles
                 .ForMember(x => x.Sex, opt => opt.MapFrom(x => x.IsMale ? "Male" : "Female"))
                 .ForMember(x => x.Address, opt => opt.MapFrom(x => BuildAddress(x.Address)));
 
+            CreateMap<ClientAccount, ClientAccountDto>();
+
+            CreateMap<Client, ClientDetailsDto>()
+                .ForMember(x => x.PersonalID, opt => opt.MapFrom(x => x.PersonalID))
+                .ForMember(x => x.ProfilePhoto, opt => opt.MapFrom(x => x.AvatarPath))
+                .ForMember(x => x.MobileNumber, opt => opt.MapFrom(x => string.IsNullOrEmpty(x.PhoneNumber) ? string.Empty : x.PhoneNumber))
+                .ForMember(x => x.Sex, opt => opt.MapFrom(x => x.IsMale ? "Male" : "Female"))
+                .ForMember(x => x.Address, opt => opt.MapFrom(x => BuildAddress(x.Address)));
+
             CreateMap<IPagedClientsQueryParams, SavePagedClientsParamsEvent>();
         }
 
