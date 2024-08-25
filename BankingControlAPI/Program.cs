@@ -1,12 +1,12 @@
 using BankingControlAPI.Domain.Enums;
 using BankingControlAPI.Extensions;
 using BankingControlAPI.Interfaces;
-using BankingControlAPI.OperationFilters;
 using BankingControlAPI.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Text.Json.Serialization;
 
 namespace BankingControlAPI;
 
@@ -95,8 +95,6 @@ public class Program
                     []
                 }
             });
-
-            opt.SchemaFilter<EnumSchemaFilter>();
         });
 
         builder.Services.AddHostedServices();
@@ -109,7 +107,6 @@ public class Program
 
             return new DefaultBackgroundTaskQueue(queueCapacity);
         });
-
 
         var app = builder.Build();
 
@@ -127,6 +124,7 @@ public class Program
         app.UseErrorHandlers();
 
         app.UseHttpsRedirection();
+        app.UseStaticFiles();
 
         app.UseAuthorization();
 
