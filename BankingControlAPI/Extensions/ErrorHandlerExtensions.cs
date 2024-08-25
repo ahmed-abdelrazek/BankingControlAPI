@@ -7,6 +7,7 @@ namespace BankingControlAPI.Extensions
         public static IServiceCollection AddErrorHandlers(this IServiceCollection services)
         {
             services.AddExceptionHandler<ForbiddenActionExceptionHandler>();
+            services.AddExceptionHandler<IdentityStandardExceptionHandler>();
             services.AddExceptionHandler<InvalidOperationExceptionHandler>();
             services.AddExceptionHandler<NotFoundExceptionHandler>();
             services.AddExceptionHandler<UnauthorizedAccessExceptionHandler>();
