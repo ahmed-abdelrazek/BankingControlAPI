@@ -11,7 +11,7 @@ namespace BankingControlAPI.HostedServices
     {
         public async Task StartAsync(CancellationToken stoppingToken)
         {
-            logger.LogInformation("Db Migration Hosted Service is running.");
+            logger.LogInformation("""{Name} is running.""", nameof(DbMigrationHostedService));
 
             await DoMigrationAndSeeding(stoppingToken);
         }
@@ -37,14 +37,11 @@ namespace BankingControlAPI.HostedServices
                     await dbContext.Database.MigrateAsync(cancellationToken: stoppingToken);
                 }
 
-                string adminRoleName = "admin";
-                string clientRoleName = "client";
-
                 if (!await dbContext.Roles.AnyAsync(cancellationToken: stoppingToken))
                 {
                     var adminRole = new IdentityRole
                     {
-                        Name = adminRoleName,
+                        Name = nameof(RoleEnum.Admin),
                     };
                     var rslt = await roleManager.CreateAsync(adminRole);
 
@@ -55,7 +52,7 @@ namespace BankingControlAPI.HostedServices
 
                     var clientRole = new IdentityRole
                     {
-                        Name = clientRoleName,
+                        Name = nameof(RoleEnum.Client),
                     };
                     rslt = await roleManager.CreateAsync(clientRole);
 
@@ -71,11 +68,12 @@ namespace BankingControlAPI.HostedServices
                     {
                         FirstName = "System",
                         LastName = "Admin",
-                        NationalID = "15926487412",
+                        PersonalID = "15926487412",
                         UserName = "admin",
                         Email = "admin@example.com",
                         EmailConfirmed = true,
                         PhoneNumber = "+201147894415",
+                        IsMale = true,
                         Accounts = []
                     };
                     var rslt = await userManager.CreateAsync(admin, "Admin@123");
@@ -85,17 +83,19 @@ namespace BankingControlAPI.HostedServices
                         throw new Exception("Couldn't create Admin user.");
                     }
 
-                    await userManager.AddToRoleAsync(admin, adminRoleName);
+                    await userManager.AddToRoleAsync(admin, nameof(RoleEnum.Admin));
 
                     var user = new Client
                     {
                         FirstName = "Ahmed",
                         LastName = "Abdelrazek",
-                        NationalID = "15946435478",
+                        PersonalID = "15946435478",
                         UserName = "user@example.com",
                         Email = "user@example.com",
                         EmailConfirmed = true,
                         PhoneNumber = "+201168297777",
+                        IsMale = true,
+                        Address = new Address { Country = "Egypt", City = "Quwiesna", Street = "Post Office ST", ZipCode = "32678" },
                         Accounts = [new ClientAccount { Name = "Saving Account" }, new ClientAccount { Name = "Checking Account" }]
                     };
 
@@ -106,7 +106,7 @@ namespace BankingControlAPI.HostedServices
                         throw new Exception("couldn't create Client user.");
                     }
 
-                    await userManager.AddToRoleAsync(user, clientRoleName);
+                    await userManager.AddToRoleAsync(user, nameof(RoleEnum.Client));
                 }
 
                 logger.LogWarning("Finished Migrating the Db");
@@ -123,7 +123,7 @@ namespace BankingControlAPI.HostedServices
 
         public Task StopAsync(CancellationToken stoppingToken)
         {
-            logger.LogInformation("Db Migration Hosted Service is stopping.");
+            logger.LogInformation("""{Name} is stopping.""", nameof(DbMigrationHostedService));
 
             return Task.CompletedTask;
         }
