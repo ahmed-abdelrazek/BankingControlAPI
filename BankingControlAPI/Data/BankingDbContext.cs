@@ -12,6 +12,7 @@ namespace BankingControlAPI.Data
         }
 
         public virtual DbSet<ClientAccount> ClientsAccounts { get; set; }
+        public virtual DbSet<FilterParameter> FiltersParameters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,13 +28,13 @@ namespace BankingControlAPI.Data
                 entity.Property(x => x.PhoneNumber).HasMaxLength(25);
 
                 entity.HasIndex(x => x.FirstName);
-                entity.Property(x => x.FirstName).HasMaxLength(60);
+                entity.Property(x => x.FirstName).HasMaxLength(100);
 
                 entity.HasIndex(x => x.LastName);
-                entity.Property(x => x.LastName).HasMaxLength(60);
+                entity.Property(x => x.LastName).HasMaxLength(100);
 
-                entity.HasIndex(x => x.NationalID);
-                entity.Property(x => x.NationalID).HasMaxLength(11);
+                entity.HasIndex(x => x.PersonalID);
+                entity.Property(x => x.PersonalID).HasMaxLength(25);
 
                 entity.OwnsOne(o => o.Address, mo =>
                 {
@@ -57,6 +58,17 @@ namespace BankingControlAPI.Data
                     .WithMany(p => p.Accounts)
                     .HasForeignKey(d => d.ClientId)
                     .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            builder.Entity<FilterParameter>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Id).HasDefaultValueSql("newsequentialid()").ValueGeneratedOnAdd();
+
+                entity.HasIndex(x => x.From);
+                entity.Property(x => x.From).HasMaxLength(100);
+
+                entity.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()").ValueGeneratedOnAdd();
             });
         }
     }

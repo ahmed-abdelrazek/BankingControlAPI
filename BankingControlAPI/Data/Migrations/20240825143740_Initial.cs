@@ -30,11 +30,11 @@ namespace BankingControlAPI.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    NationalID = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PersonalID = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     AvatarPath = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
-                    Sex = table.Column<bool>(type: "bit", nullable: false),
+                    IsMale = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -54,6 +54,20 @@ namespace BankingControlAPI.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clients", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FiltersParameters",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "newsequentialid()"),
+                    From = table.Column<int>(type: "int", maxLength: 100, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FiltersParameters", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,9 +238,9 @@ namespace BankingControlAPI.Data.Migrations
                 column: "LastName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clients_NationalID",
+                name: "IX_Clients_PersonalID",
                 table: "Clients",
-                column: "NationalID");
+                column: "PersonalID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_PhoneNumber",
@@ -249,6 +263,11 @@ namespace BankingControlAPI.Data.Migrations
                 name: "IX_ClientsAccounts_Name",
                 table: "ClientsAccounts",
                 column: "Name");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FiltersParameters_From",
+                table: "FiltersParameters",
+                column: "From");
         }
 
         /// <inheritdoc />
@@ -271,6 +290,9 @@ namespace BankingControlAPI.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ClientsAccounts");
+
+            migrationBuilder.DropTable(
+                name: "FiltersParameters");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingControlAPI.Data.Migrations
 {
     [DbContext(typeof(BankingDbContext))]
-    [Migration("20240822153617_Initial")]
+    [Migration("20240825143740_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -50,24 +50,22 @@ namespace BankingControlAPI.Data.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsMale")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NationalID")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -80,6 +78,11 @@ namespace BankingControlAPI.Data.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PersonalID")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
@@ -89,9 +92,6 @@ namespace BankingControlAPI.Data.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Sex")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -106,8 +106,6 @@ namespace BankingControlAPI.Data.Migrations
 
                     b.HasIndex("LastName");
 
-                    b.HasIndex("NationalID");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -115,6 +113,8 @@ namespace BankingControlAPI.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("PersonalID");
 
                     b.HasIndex("PhoneNumber");
 
@@ -143,6 +143,33 @@ namespace BankingControlAPI.Data.Migrations
                     b.HasIndex("Name");
 
                     b.ToTable("ClientsAccounts");
+                });
+
+            modelBuilder.Entity("BankingControlAPI.Domain.Entites.FilterParameter", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newsequentialid()");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<int>("From")
+                        .HasMaxLength(100)
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("From");
+
+                    b.ToTable("FiltersParameters");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
