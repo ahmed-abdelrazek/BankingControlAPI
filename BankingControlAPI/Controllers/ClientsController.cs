@@ -37,6 +37,7 @@ namespace BankingControlAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ClientDetailsDto>> GetById(Guid id)
         {
             var data = await Mediator.Send(new GetClientDetailsByIdQuery(id.ToString()));
