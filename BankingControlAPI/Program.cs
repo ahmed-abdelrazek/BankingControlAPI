@@ -60,6 +60,7 @@ public class Program
 
         Log.Logger.Information("Setting Controllers");
         builder.Services.AddControllers();
+        builder.Services.AddHttpContextAccessor();
 
         Log.Logger.Information("Setting Swagger");
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
