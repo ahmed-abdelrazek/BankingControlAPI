@@ -8,6 +8,7 @@ namespace BankingControlAPI.Extensions
         {
             services.AddExceptionHandler<ForbiddenActionExceptionHandler>();
             services.AddExceptionHandler<InvalidOperationExceptionHandler>();
+            services.AddExceptionHandler<NotFoundExceptionHandler>();
             services.AddExceptionHandler<UnauthorizedAccessExceptionHandler>();
             services.AddExceptionHandler<DefaultExceptionHandler>();
 
