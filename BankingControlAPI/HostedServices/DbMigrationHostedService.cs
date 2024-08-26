@@ -1,5 +1,4 @@
 ﻿using BankingControlAPI.Data;
-using BankingControlAPI.Domain.Entites;
 using BankingControlAPI.Domain.Enums;
 using BankingControlAPI.Domain.System;
 using Microsoft.AspNetCore.Identity;
@@ -23,7 +22,7 @@ namespace BankingControlAPI.HostedServices
             var maintenanceWindow = scope.ServiceProvider.GetRequiredService<MaintenanceWindow>();
 
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Client>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
             try
             {
@@ -64,17 +63,11 @@ namespace BankingControlAPI.HostedServices
 
                 if (!await dbContext.Users.AnyAsync(cancellationToken: stoppingToken))
                 {
-                    var admin = new Client
+                    var admin = new IdentityUser
                     {
-                        FirstName = "System",
-                        LastName = "Admin",
-                        PersonalID = "15926487412",
                         UserName = "admin",
                         Email = "admin@example.com",
                         EmailConfirmed = true,
-                        PhoneNumber = "+201147894415",
-                        IsMale = true,
-                        Accounts = []
                     };
                     var rslt = await userManager.CreateAsync(admin, "Admin@123");
 
@@ -85,18 +78,11 @@ namespace BankingControlAPI.HostedServices
 
                     await userManager.AddToRoleAsync(admin, nameof(RoleEnum.Admin));
 
-                    var user = new Client
+                    var user = new IdentityUser
                     {
-                        FirstName = "Ahmed",
-                        LastName = "Abdelrazek",
-                        PersonalID = "15946435478",
                         UserName = "user@example.com",
                         Email = "user@example.com",
                         EmailConfirmed = true,
-                        PhoneNumber = "+201168297777",
-                        IsMale = true,
-                        Address = new Address { Country = "Egypt", City = "Quwiesna", Street = "Post Office ST", ZipCode = "32678" },
-                        Accounts = [new ClientAccount { Name = "Saving Account" }, new ClientAccount { Name = "Checking Account" }]
                     };
 
                     rslt = await userManager.CreateAsync(user, "user123");

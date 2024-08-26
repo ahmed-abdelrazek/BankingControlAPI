@@ -1,5 +1,4 @@
 ﻿using BankingControlAPI.Data;
-using BankingControlAPI.Domain.Entites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
@@ -36,7 +35,7 @@ namespace BankingControlAPI.Extensions
             services.AddAuthorizationBuilder()
                 .AddDefaultPolicy("defaultPolicy", defaultPolicy);
 
-            services.AddIdentityCore<Client>(options =>
+            services.AddIdentityCore<IdentityUser>(options =>
             {
                 // Password settings.
                 options.Password.RequireDigit = true;
@@ -58,8 +57,8 @@ namespace BankingControlAPI.Extensions
                 options.SignIn.RequireConfirmedEmail = false;
             })
             .AddRoles<IdentityRole>()
-            .AddUserManager<UserManager<Client>>()
-            .AddSignInManager<SignInManager<Client>>()
+            .AddUserManager<UserManager<IdentityUser>>()
+            .AddSignInManager<SignInManager<IdentityUser>>()
             .AddRoleManager<RoleManager<IdentityRole>>()
             .AddEntityFrameworkStores<BankingDbContext>()
             .AddApiEndpoints();

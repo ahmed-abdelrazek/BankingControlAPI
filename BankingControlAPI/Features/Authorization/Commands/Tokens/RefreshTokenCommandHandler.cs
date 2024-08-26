@@ -1,5 +1,4 @@
-﻿using BankingControlAPI.Domain.Entites;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace BankingControlAPI.Features.Authorization.Commands.Tokens
 {
-    internal sealed class RefreshTokenCommandHandler(SignInManager<Client> SignInManager, IOptionsMonitor<BearerTokenOptions> BearerTokenOptions, TimeProvider TimeProvider) : IRequestHandler<RefreshTokenCommand, EmptyHttpResult>
+    internal sealed class RefreshTokenCommandHandler(SignInManager<IdentityUser> SignInManager, IOptionsMonitor<BearerTokenOptions> BearerTokenOptions, TimeProvider TimeProvider) : IRequestHandler<RefreshTokenCommand, EmptyHttpResult>
     {
         public async Task<EmptyHttpResult> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
@@ -21,7 +20,7 @@ namespace BankingControlAPI.Features.Authorization.Commands.Tokens
 
             // Reject the /refresh attempt with a 401 if the token expired or the security stamp validation fails
             if (refreshTicket?.Properties?.ExpiresUtc is not { } expiresUtc || TimeProvider.GetUtcNow() >= expiresUtc ||
-                await SignInManager.ValidateSecurityStampAsync(refreshTicket.Principal) is not Client user)
+                await SignInManager.ValidateSecurityStampAsync(refreshTicket.Principal) is not IdentityUser user)
             {
                 throw new UnauthorizedAccessException("Refresh token expired or couldn't be validated.");
             }

@@ -1,10 +1,9 @@
-﻿using BankingControlAPI.Domain.Entites;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace BankingControlAPI.Features.Authorization.Commands.Tokens
 {
-    internal sealed class AccessTokenCommandHandler(UserManager<Client> UserManager, SignInManager<Client> SignInManager) : IRequestHandler<AccessTokenCommand>
+    internal sealed class AccessTokenCommandHandler(UserManager<IdentityUser> UserManager, SignInManager<IdentityUser> SignInManager) : IRequestHandler<AccessTokenCommand>
     {
         public async Task Handle(AccessTokenCommand request, CancellationToken cancellationToken)
         {
