@@ -4,13 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankingControlAPI.Data
 {
-    public class BankingDbContext : IdentityDbContext<Client>
+    public class BankingDbContext : IdentityDbContext
     {
         public BankingDbContext(DbContextOptions<BankingDbContext> options)
             : base(options)
         {
         }
 
+        public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<ClientAccount> ClientsAccounts { get; set; }
         public virtual DbSet<FilterParameter> FiltersParameters { get; set; }
 
@@ -20,12 +21,13 @@ namespace BankingControlAPI.Data
 
             builder.Entity<Client>(entity =>
             {
-                entity.ToTable("Clients");
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Id).HasDefaultValueSql("newsequentialid()").ValueGeneratedOnAdd();
 
-                entity.Property(x => x.AvatarPath).HasMaxLength(250);
+                entity.Property(x => x.PhotoPath).HasMaxLength(250);
 
-                entity.HasIndex(x => x.PhoneNumber);
-                entity.Property(x => x.PhoneNumber).HasMaxLength(25);
+                entity.HasIndex(x => x.MobileNumber);
+                entity.Property(x => x.MobileNumber).HasMaxLength(25);
 
                 entity.HasIndex(x => x.FirstName);
                 entity.Property(x => x.FirstName).HasMaxLength(100);

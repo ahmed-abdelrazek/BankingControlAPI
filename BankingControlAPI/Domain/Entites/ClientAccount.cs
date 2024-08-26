@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public required string Name { get; set; }
-        public string? ClientId { get; set; }
-        public Client? Client { get; set; }
+        public Guid ClientId { get; set; }
+        public virtual Client? Client { get; set; }
     }
 }
