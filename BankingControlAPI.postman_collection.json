@@ -1,0 +1,373 @@
+{
+	"info": {
+		"_postman_id": "bc1010f2-48df-4d4d-bc5b-aacd5e4a9dd6",
+		"name": "BankingControlAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37907042"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin@example.com\",\r\n  \"password\": \"Admin@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7049/Connect/Token",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7049",
+							"path": [
+								"Connect",
+								"Token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get AccessToken With RefreshToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"refreshToken\": \"CfDJ8FXfUnxUyWVGijE8ADbabrSjn_g_bAwwUfFLUu80rHHgSkZFxmW863J2PeCq6Nzpyo7uz0Ny0u-Cuei0bwj4SNh2iTelLChPUqGqxDECH1zvejhG9X9uMyuNS1mmY4tJHU_TPglaE2XQuo0c3zdIrVFMwXhGc5ZWdtnTBwtSRyaNzXhNJwRptQzCcPePpyfb0FuNzZHX-rcl-sHJCPpE7dgW4RmDB_kHYHTeNVOM-YnH0WhZbSohTxKXpScYYn7a_git30fGqHCBv3xodJU9_lKRGiF-pRmbQX2tb7eyyVD7x3LseTNnCz0z35vppJfiPeusyn6oGm5P9HbGLbvjyv4MbVl0CnS8y6kk89Wk6xhuE7aDx80GnoK7tGQncmmRovVJSgLFNhCuQm_Deh2ylZZI4IZtND1mQtVC_0zeApTgafVAmMv852g67Oh0k0Qm92Koyio3j90oL2yRaYx3GyxgiwPHdrlcdtGg265EA_NFgxK-Z3YjqzWIkeShsbNflH5W08yRYMXl0OxAma6c4U2AMJFMZ1U0XXRy2JvQvazPi3ZlNoyXPx9R3X7WmRoihwA36h51O1XZuwuOdeJZYe1-bsCKnJeJ2oVxHVuvfh_kjHfaORGoIFNoJ1NT62vz9foqCZAJyVhlvC3meRgGeBEofdqenbbIQhnbTiI6JYKd966vliY-GnCWBXovsAinVFXVfFXMA8vHRnwYg_RjvOxfbJfQQWGEF1tK9zMaCI-W_BGPqYcI1krGhv9hpo-xug\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7049/Connect/Refresh",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7049",
+							"path": [
+								"Connect",
+								"Refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"user123@example.com\",\r\n  \"password\": \"pass123\",\r\n  \"passwordConfirmation\": \"pass123\",\r\n  \"roleId\": 0 // 0 = client and 1 = admin\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7049/Users/Register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7049",
+							"path": [
+								"Users",
+								"Register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "Paged Clients List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "CfDJ8FXfUnxUyWVGijE8ADbabrQZDCaQA13BiuHrx9b5teM7XjUuzncJrODMmp-7sCgJZTPtQt9gFJ_T_mdttNmf7rx4A3gaYeozhqSLVVoL5YK0wK8hgkDvsUggBg1nV12Rl97tMEn3deggwdyMPoB_Ha6YIUmh2H-0VTbX_wWH7m0psuqLEV9Ld4eJxIPXbcZinJS8nnZy8pCwiZs315t3LvN1iAODj3DiQ7XIs8zg2XCjGfXQOQGoKQB8ua9zXaFXFb8TSJ9kABCk1HZyG9pQyCuLTUIfCJlm5KzRNBgweiSWKsTO1YhY70dCvUexnIg1lwGWEcyRAH98BeYOjUnxk96SJllVbYpMBHlMqxH30hVqixeeALOvE1PyxoUPtVtevjty_4ps3jcUsxCB0A6wk4krocs4jUWWVDQtJROyW5ycLVLq4Y4KukZ2LE_6C9C5maXSYB9D1Exc4cZ4qz3l_wmBUM5Pro1s3u-L15RWg3oiHJBocPuOxU5A1gI42Qu8aEfck6TeMqNoUK6NGSjTyKSFhHUUjE5TIJP-DLopm9iyjiuGwbxu3ThvEZYfRaHL5bH1X-2jgWZLlFlGvSTrwEyTChekZhq9-o14kL28N1debTCt4g-38JZoNyYYsRx7ZuP8_Ga1ZSoefXJOv1WDnrbjtKhU_FAfkt5oiB0rXuURobeHfC3ngVdI6ZgA_wXHeo0-wqBIVMfxk3UUcMe_5JxPYY-YCPzzoWbrSYA_E4U5QrsaJqWH-Dh82K7l29z-0g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7049/api/Clients",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7049",
+							"path": [
+								"api",
+								"Clients"
+							],
+							"query": [
+								{
+									"key": "Email",
+									"value": "admin",
+									"description": "don't have to enter the full thing",
+									"disabled": true
+								},
+								{
+									"key": "MobileNumber",
+									"value": "15487",
+									"disabled": true
+								},
+								{
+									"key": "FirstName",
+									"value": "ahm",
+									"disabled": true
+								},
+								{
+									"key": "LastName",
+									"value": "abdelrazek",
+									"disabled": true
+								},
+								{
+									"key": "PersonalID",
+									"value": "159482345",
+									"disabled": true
+								},
+								{
+									"key": "IsMale",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "OrderProperty",
+									"value": "0",
+									"description": "None=0, \nEmail=1, \nMobileNumber=2,\nFirstName=3,\nLastName=4,\nPersonalID=5,\nIsMale=6",
+									"disabled": true
+								},
+								{
+									"key": "OrderIsDesc",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "PageNumber",
+									"value": "1",
+									"description": "if wasn't sent will be set to default value 1",
+									"disabled": true
+								},
+								{
+									"key": "PageSize",
+									"value": "30",
+									"description": "if wasn't sent will be set to default value 20",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Paged Suggestions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "CfDJ8FXfUnxUyWVGijE8ADbabrQZDCaQA13BiuHrx9b5teM7XjUuzncJrODMmp-7sCgJZTPtQt9gFJ_T_mdttNmf7rx4A3gaYeozhqSLVVoL5YK0wK8hgkDvsUggBg1nV12Rl97tMEn3deggwdyMPoB_Ha6YIUmh2H-0VTbX_wWH7m0psuqLEV9Ld4eJxIPXbcZinJS8nnZy8pCwiZs315t3LvN1iAODj3DiQ7XIs8zg2XCjGfXQOQGoKQB8ua9zXaFXFb8TSJ9kABCk1HZyG9pQyCuLTUIfCJlm5KzRNBgweiSWKsTO1YhY70dCvUexnIg1lwGWEcyRAH98BeYOjUnxk96SJllVbYpMBHlMqxH30hVqixeeALOvE1PyxoUPtVtevjty_4ps3jcUsxCB0A6wk4krocs4jUWWVDQtJROyW5ycLVLq4Y4KukZ2LE_6C9C5maXSYB9D1Exc4cZ4qz3l_wmBUM5Pro1s3u-L15RWg3oiHJBocPuOxU5A1gI42Qu8aEfck6TeMqNoUK6NGSjTyKSFhHUUjE5TIJP-DLopm9iyjiuGwbxu3ThvEZYfRaHL5bH1X-2jgWZLlFlGvSTrwEyTChekZhq9-o14kL28N1debTCt4g-38JZoNyYYsRx7ZuP8_Ga1ZSoefXJOv1WDnrbjtKhU_FAfkt5oiB0rXuURobeHfC3ngVdI6ZgA_wXHeo0-wqBIVMfxk3UUcMe_5JxPYY-YCPzzoWbrSYA_E4U5QrsaJqWH-Dh82K7l29z-0g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7049/api/Clients/PagedSuggestions",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7049",
+							"path": [
+								"api",
+								"Clients",
+								"PagedSuggestions"
+							]
+						},
+						"description": "get the last 3 params for the paged client list"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Client Details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "CfDJ8FXfUnxUyWVGijE8ADbabrS91I5A6cxv1HLFAfd4uHygYZ5gmGJrPjy5eY-2e9faXYVtzgiq7vkODDYl3J-4r4cMmIKQ_ZsCvW1dxwuG2kQXR1kZ6HeDBxXHgaiVRyl1gueyQfVzJE_2tEvSc1-Ui3xTyUFqVdkfXJQ-INLxxrQD_BE0mWNLFMq0McLzBPQqD4EysycA7yKMpS9fBluEhHEeISCWvUiU9f922pMr_Yr_h0Z4DbCDQZTLf1Np5ivt5hIJNIdGPhCBckO48TWwjtOYhjRr3W1zenydAgPF6fCsQSfUvpNyUtcgWWAXJ3Uq8pOolJAILXt739nQ_MMIZtL8ybhgwLCPnkJSePZEiGM7foBYkNaOyRmOv7Pwjyl0XNcKhl4ZJac0qfQNLlOYmmd1gIrKRSK2JGJ11Ys_uGpwC6mhwXGk6qILisdWMA92OA0hc6Q3RICbol2-uj9Wl53uYY-PZsEA1APBwVVaxfjRoiBM_s5O_cSjQVwoUdO8_qrhOelnSQ28aRi27dPxESpbAWXUuRcw2NEKdWRtvfy3Vj2aPL0zYxwRGrLPfapCFfkCWz_PCnM0CM7I4eTcf5yxS9xQrykoTQ4dd06yfgB9ZjQKPn_lPDjtmKTgiWYa_AgYTYh8FnaqngQq9qNtITT-vJXw6Hf9T2a36RsMgOUEf81QB_n7SpXD0ycXMv5XLrhnXeizEwYY26K9ErgGAiIdRzcBUIpbY6F1WiMjAsipb_ZpE7096Xi_OQoL1WIOBg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7049/api/Clients/ab58aad1-7963-ef11-bae7-841b7715fd73",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7049",
+							"path": [
+								"api",
+								"Clients",
+								"ab58aad1-7963-ef11-bae7-841b7715fd73"
+							]
+						},
+						"description": "https://localhost:7049/api/Clients/{GUID/UUID}"
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Client",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "CfDJ8FXfUnxUyWVGijE8ADbabrQwtGiAVmnpDapMnYiIJNd2aGFxOL6RRzqf-dnX4FRiS3491h2i1ecViAqOC0GsJE9nlzX1seNZEZga45eFiVKlUbWJHP1hIC8DaqL9xeugRmYVeGUNJqKdGpAzJghFX0gXGvgecU__w_L5XZ_ofOEtq7rKUxopiX8De_kVRasNqfmv3vRtcBIzuV0LyBe4ZBMsN3HRulYYHphiY6xKMo0djggsme3vogSsaa5nqYWFSMMvj-5bW1glg9rZDk1chm3_fG9uncHsAvenBqrjJiMJuM35IxJlqO9ud6GP3hjvIVCcmpXlQLTRkXvwhUiWP-xo2RnNMoCDrUzkQMhutZVBXqeYuU7JrPlquEE9APXyd-SbALb6liQMu6ODTgSz8JJEOxJDrbMHuAgOk7UUrkTuOSM0xW4Va7_p56MnOiqzXwDNJ-2YzCc3J7RqKjcj6W6gOMwYNbrGTvGooJIjNHJbXJX4DbsAtQ4n6lwXg8xrM4jCk93aP6bPMttXrKpxqs-z2Re_cdN-AndT3iUKxh8ZfjMFbMwxEfKQZKvwdsEuREGbNdD8R-wMODCHA6S4FnX-ePidDCcHY_Uto8RFI9pel10O1_tIoBc0o2XFcy6-cEqLll1-PXUdVGl9PE6jhereJZPXWy_yQtIfYFk_fY_rRycDQbg85IWQa0nMhg1lmgZqxpKNDI2u2-P8gnRh87slkHdO9Ul-4FO_p1xS12VkIlrEsICta2bEmXSSN5Nf-Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Email",
+									"value": "client1@example.com",
+									"description": "email",
+									"type": "text"
+								},
+								{
+									"key": "MobileNumber",
+									"value": "201231236658",
+									"description": "international phone number",
+									"type": "text"
+								},
+								{
+									"key": "FirstName",
+									"value": "first",
+									"description": "name less than 60 letters",
+									"type": "text"
+								},
+								{
+									"key": "LastName",
+									"value": "last",
+									"description": "name less than 60 letters",
+									"type": "text"
+								},
+								{
+									"key": "PersonalID",
+									"value": "12345678911",
+									"description": "ID with 11 characters",
+									"type": "text"
+								},
+								{
+									"key": "Photo",
+									"description": "client photo 5mb or less",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								},
+								{
+									"key": "IsMale",
+									"value": "true",
+									"description": "true for male false for female",
+									"type": "text"
+								},
+								{
+									"key": "Address.Country",
+									"value": "Egypt",
+									"description": "enter full address or don't send at all",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Address.City",
+									"value": "Cairo",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Address.Street",
+									"value": "Most Main Street ST",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Address.ZipCode",
+									"value": "32678",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Accounts",
+									"value": "Saving Account",
+									"description": "array of accounts names adding more will add more",
+									"type": "text"
+								},
+								{
+									"key": "Accounts",
+									"value": "Checking Account",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:7049/api/Clients/Add",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7049",
+							"path": [
+								"api",
+								"Clients",
+								"Add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
