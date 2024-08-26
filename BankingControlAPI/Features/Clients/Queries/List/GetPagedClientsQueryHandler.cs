@@ -15,7 +15,7 @@ namespace BankingControlAPI.Features.Clients.Queries.List
     {
         public async Task<PagedList<ClientPagedListDto>> Handle(GetPagedClientsQuery request, CancellationToken cancellationToken)
         {
-            var query = dbContext.Users.AsNoTracking();
+            var query = dbContext.Clients.AsNoTracking();
             query = BuildPredicate(query, request);
 
             if (request.OrderProperty is not Domain.Enums.ClientOrderParams.None)
@@ -57,9 +57,9 @@ namespace BankingControlAPI.Features.Clients.Queries.List
                 query = query.Where(x => EF.Functions.Like(x.Email, $"%{request.Email}%"));
             }
 
-            if (!string.IsNullOrWhiteSpace(request.PersonalID))
+            if (!string.IsNullOrWhiteSpace(request.MobileNumber))
             {
-                query = query.Where(x => EF.Functions.Like(x.PhoneNumber, $"%{request.PersonalID}%"));
+                query = query.Where(x => EF.Functions.Like(x.MobileNumber, $"%{request.MobileNumber}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(request.FirstName))

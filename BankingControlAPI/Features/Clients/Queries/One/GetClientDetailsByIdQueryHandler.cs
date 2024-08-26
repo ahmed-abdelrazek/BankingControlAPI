@@ -11,7 +11,9 @@ namespace BankingControlAPI.Features.Clients.Queries.One
     {
         public async Task<ClientDetailsDto> Handle(GetClientDetailsByIdQuery request, CancellationToken cancellationToken)
         {
-            var data = await dbContext.Users.AsNoTracking().Include(x => x.Accounts).FirstOrDefaultAsync(x => x.Id == request.ClientId, cancellationToken: cancellationToken);
+            var data = await dbContext.Clients.AsNoTracking()
+                .Include(x => x.Accounts)
+                .FirstOrDefaultAsync(x => x.Id == request.ClientId, cancellationToken: cancellationToken);
 
             if (data is null)
             {

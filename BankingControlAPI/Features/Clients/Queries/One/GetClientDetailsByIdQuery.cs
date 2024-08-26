@@ -3,5 +3,5 @@ using MediatR;
 
 namespace BankingControlAPI.Features.Clients.Queries.One
 {
-    public record GetClientDetailsByIdQuery(string ClientId) : IRequest<ClientDetailsDto>;
+    public record GetClientDetailsByIdQuery(Guid ClientId) : IRequest<ClientDetailsDto>;
 }
