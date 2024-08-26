@@ -1,4 +1,5 @@
-﻿using BankingControlAPI.Features.Authorization.Commands.Tokens;
+﻿using BankingControlAPI.Features.Authorization.Commands.Register;
+using BankingControlAPI.Features.Authorization.Commands.Tokens;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Authorization;
@@ -34,6 +35,16 @@ namespace BankingControlAPI.Controllers
             await Mediator.Send(command, cancellationToken);
 
             return TypedResults.Empty;
+        }
+
+        [HttpPost("~/Users/Register")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType<ValidationProblem>(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Register(RegisterUserCommand command, CancellationToken cancellationToken)
+        {
+            await Mediator.Send(command, cancellationToken);
+
+            return Ok();
         }
     }
 }
