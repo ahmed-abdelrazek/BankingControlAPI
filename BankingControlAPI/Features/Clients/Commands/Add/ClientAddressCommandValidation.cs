@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace BankingControlAPI.Features.Clients.Commands.Register
+namespace BankingControlAPI.Features.Clients.Commands.Add
 {
     public class ClientAddressCommandValidation : AbstractValidator<ClientAddressCommand?>
     {

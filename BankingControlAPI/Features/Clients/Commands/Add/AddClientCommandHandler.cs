@@ -1,17 +1,19 @@
 ﻿using AutoMapper;
-using BankingControlAPI.CustomExceptions;
+using BankingControlAPI.Data;
 using BankingControlAPI.Domain.Entites;
+using BankingControlAPI.Features.Clients.DTOs;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using System.Net.Mime;
 
-namespace BankingControlAPI.Features.Clients.Commands.Register
+namespace BankingControlAPI.Features.Clients.Commands.Add
 {
-    internal sealed class RegisterClientCommandHandler(IWebHostEnvironment WebHostEnvironment, UserManager<Client> UserManager, IMapper Mapper) : IRequestHandler<RegisterClientCommand, string>
+    internal sealed class AddClientCommandHandler(IWebHostEnvironment WebHostEnvironment, BankingDbContext DbContext, IMapper Mapper) : IRequestHandler<AddClientCommand, ClientDetailsDto>
     {
-        public async Task<string> Handle(RegisterClientCommand request, CancellationToken cancellationToken)
+        public async Task<ClientDetailsDto> Handle(AddClientCommand request, CancellationToken cancellationToken)
         {
-            var user = Mapper.Map<RegisterClientCommand, Client>(request);
+            var client = Mapper.Map<AddClientCommand, Client>(request);
+
+            using var transaction = await DbContext.Database.BeginTransactionAsync(cancellationToken);
 
             string? photoFullPath = null;
 
@@ -31,7 +33,7 @@ namespace BankingControlAPI.Features.Clients.Commands.Register
                         var extension = Path.GetExtension(request.Photo.FileName);
                         var photoName = string.Format("{0}{1}", Path.GetRandomFileName(), extension);
 
-                        user.AvatarPath = $"images/{photoName}";
+                        client.PhotoPath = $"images/{photoName}";
                         var photoStream = request.Photo.OpenReadStream();
                         photoFullPath = Path.Combine(imagesDirectory, photoName);
 
@@ -47,22 +49,20 @@ namespace BankingControlAPI.Features.Clients.Commands.Register
                 }
             }
 
-            var userRslt = await UserManager.CreateAsync(user, request.Password);
+            try
+            {
+                await DbContext.AddAsync(client, cancellationToken);
+                await DbContext.SaveChangesAsync(cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
 
-            if (!userRslt.Succeeded)
+                return Mapper.Map<ClientDetailsDto>(client);
+            }
+            catch
             {
                 DeleteImageOnFail(photoFullPath);
-                throw new IdentityStandardException("Could not create new user.", userRslt.Errors);
+                await transaction.RollbackAsync(cancellationToken);
+                throw;
             }
-
-            var roleRslt = await UserManager.AddToRoleAsync(user, request.Role.ToString());
-            if (!roleRslt.Succeeded)
-            {
-                DeleteImageOnFail(photoFullPath);
-                throw new IdentityStandardException("Could not add role to the new user.", roleRslt.Errors);
-            }
-
-            return user.Id;
         }
 
         private static void DeleteImageOnFail(string? fullPath)

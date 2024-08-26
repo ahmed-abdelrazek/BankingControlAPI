@@ -1,18 +1,14 @@
 ﻿using FluentValidation;
 using PhoneNumbers;
 
-namespace BankingControlAPI.Features.Clients.Commands.Register
+namespace BankingControlAPI.Features.Clients.Commands.Add
 {
-    public class RegisterClientCommandValidation : AbstractValidator<RegisterClientCommand>
+    public class AddClientCommandValidation : AbstractValidator<AddClientCommand>
     {
-        public RegisterClientCommandValidation()
+        public AddClientCommandValidation()
         {
             RuleFor(x => x.Email).NotEmpty();
             RuleFor(x => x.Email).EmailAddress();
-
-            RuleFor(x => x.Password).Length(6, 25);
-            RuleFor(x => x.Password).Equal(x => x.PasswordConfirmation)
-                .WithMessage("'Password' does not match.");
 
             RuleFor(x => x.MobileNumber).NotEmpty();
             RuleFor(x => x.MobileNumber).Must(IsValidPhoneNumber)

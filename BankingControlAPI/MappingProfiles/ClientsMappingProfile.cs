@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BankingControlAPI.Domain.Entites;
 using BankingControlAPI.Domain.Requests.Interfaces;
-using BankingControlAPI.Features.Clients.Commands.Register;
+using BankingControlAPI.Features.Clients.Commands.Add;
 using BankingControlAPI.Features.Clients.DTOs;
 using BankingControlAPI.Features.Clients.Events;
 using PhoneNumbers;
@@ -13,25 +13,22 @@ namespace BankingControlAPI.MappingProfiles
         public ClientsMappingProfile()
         {
             CreateMap<Client, ClientPagedListDto>()
-                .ForMember(x => x.ProfilePhoto, opt => opt.MapFrom(x => x.AvatarPath))
-                .ForMember(x => x.MobileNumber, opt => opt.MapFrom(x => FormatNumber(x.PhoneNumber)))
+                .ForMember(x => x.PhotoRelativeUrl, opt => opt.MapFrom(x => x.PhotoPath))
+                .ForMember(x => x.MobileNumber, opt => opt.MapFrom(x => FormatNumber(x.MobileNumber)))
                 .ForMember(x => x.Sex, opt => opt.MapFrom(x => x.IsMale ? "Male" : "Female"))
                 .ForMember(x => x.Address, opt => opt.MapFrom(x => BuildAddress(x.Address)));
 
             CreateMap<ClientAccount, ClientAccountDto>();
 
             CreateMap<Client, ClientDetailsDto>()
-                .ForMember(x => x.ProfilePhoto, opt => opt.MapFrom(x => x.AvatarPath))
-                .ForMember(x => x.MobileNumber, opt => opt.MapFrom(x => FormatNumber(x.PhoneNumber)))
+                .ForMember(x => x.PhotoRelativeUrl, opt => opt.MapFrom(x => x.PhotoPath))
+                .ForMember(x => x.MobileNumber, opt => opt.MapFrom(x => FormatNumber(x.MobileNumber)))
                 .ForMember(x => x.Sex, opt => opt.MapFrom(x => x.IsMale ? "Male" : "Female"))
                 .ForMember(x => x.Address, opt => opt.MapFrom(x => BuildAddress(x.Address)));
 
             CreateMap<IPagedClientsQueryParams, SavePagedClientsParamsEvent>();
 
-            CreateMap<RegisterClientCommand, Client>()
-                .ForMember(x => x.Email, opt => opt.MapFrom(x => x.Email))
-                .ForMember(x => x.UserName, opt => opt.MapFrom(x => x.Email))
-                .ForMember(x => x.PhoneNumber, opt => opt.MapFrom(x => x.MobileNumber));
+            CreateMap<AddClientCommand, Client>();
 
             CreateMap<string, ClientAccount>()
                 .ConvertUsing((src, dest, context) => new ClientAccount { Name = src });

@@ -1,6 +1,6 @@
 ﻿using BankingControlAPI.Domain.Enums;
 using BankingControlAPI.Domain.Responses;
-using BankingControlAPI.Features.Clients.Commands.Register;
+using BankingControlAPI.Features.Clients.Commands.Add;
 using BankingControlAPI.Features.Clients.DTOs;
 using BankingControlAPI.Features.Clients.Queries.List;
 using BankingControlAPI.Features.Clients.Queries.One;
@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BankingControlAPI.Controllers
 {
+    [Authorize(Roles = nameof(RoleEnum.Admin))]
     [Route("api/[controller]")]
     [ApiController]
     public class ClientsController(IMediator Mediator) : ControllerBase
     {
-        [Authorize(Roles = nameof(RoleEnum.Admin))]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -24,7 +24,6 @@ namespace BankingControlAPI.Controllers
             return Ok(pagedData);
         }
 
-        [Authorize(Roles = nameof(RoleEnum.Admin))]
         [HttpGet("PagedSuggestions")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -34,22 +33,20 @@ namespace BankingControlAPI.Controllers
             return Ok(data);
         }
 
-        [Authorize(Roles = nameof(RoleEnum.Admin))]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ClientDetailsDto>> GetById(Guid id)
         {
-            var data = await Mediator.Send(new GetClientDetailsByIdQuery(id.ToString()));
+            var data = await Mediator.Send(new GetClientDetailsByIdQuery(id));
             return Ok(data);
         }
 
-        [AllowAnonymous]
-        [HttpPost("Register")]
+        [HttpPost("Add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<string>> Register([FromForm] RegisterClientCommand command)
+        public async Task<ActionResult<ClientDetailsDto>> Add([FromForm] AddClientCommand command)
         {
             var data = await Mediator.Send(command);
             return Ok(data);

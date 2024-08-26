@@ -1,4 +1,4 @@
-﻿namespace BankingControlAPI.Features.Clients.Commands.Register
+﻿namespace BankingControlAPI.Features.Clients.Commands.Add
 {
     public record ClientAddressCommand
     {
