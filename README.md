@@ -14,4 +14,6 @@ you have to change Connection String in `appsettings.json`/`appsettings.Developm
 you can test the api by visiting the swagger page most likly at 'https://localhost:7049/swagger' Visual Studio will launch in swagger
 ![image](https://github.com/user-attachments/assets/52a63bd8-31b9-4a22-a996-def5d6e453a6)
 
-you can also use included postman collection to do the samething
+you can also use included postman collection to do the same thing
+
+default admin user is `admin@example.com` `Admin@123`
