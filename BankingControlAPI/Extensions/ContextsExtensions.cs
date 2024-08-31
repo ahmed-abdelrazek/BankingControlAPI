@@ -1,6 +1,5 @@
 ﻿using BankingControlAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Debug;
 using Serilog;
 
 namespace BankingControlAPI.Extensions
@@ -17,12 +16,11 @@ namespace BankingControlAPI.Extensions
             services.AddDbContext<BankingDbContext>((sp, options) =>
             {
                 var configuration = sp.GetRequiredService<IConfiguration>();
+                var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
+
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
 
-                options.UseLoggerFactory(new LoggerFactory(
-                [
-                    new DebugLoggerProvider()
-                ]));
+                options.UseLoggerFactory(loggerFactory);
             });
 
             return services;
